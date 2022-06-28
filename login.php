@@ -13,6 +13,7 @@ if($username == ''){
 if($password == ''){
     $error = $error . "Password cannot be blank<br>";
 }
+// Check if user already registered
 $sqlTables = $conn->prepare("SELECT * FROM users WHERE username='$username' AND password='$password' ");
     $sqlTables->execute();
     $result = $sqlTables->setFetchMode(PDO::FETCH_ASSOC);
@@ -45,5 +46,5 @@ $sqlTables = $conn->prepare("SELECT * FROM users WHERE username='$username' AND 
         ?>
     </form>
     
-    <?php include 'inc/checker.php'; ?>
+    <?php include 'inc/checker.php'; // Delete when going live - only for testing?> 
     <?php include 'inc/footer.php'; ?>

@@ -31,6 +31,7 @@
   </div>
 </nav>
 <?php
+// Show the user he is logged in
 if(isset($_SESSION['username'])){
             echo'<h6 style="text-align:right"> Welcome ' . $_SESSION['username'] . '</h6>';
         } ?>
@@ -40,7 +41,7 @@ if(isset($_SESSION['username'])){
 $servername = "localhost";
 $username = "root";
 $password = $error = $connectionStatus = '';
-
+// Setup show to console
 function debug_to_console($data) {
   $output = $data;
   if (is_array($output))
@@ -48,12 +49,14 @@ function debug_to_console($data) {
 
   echo "<script>console.log('Connection Status: " . $output . "' );</script>";
 }
+//PDO connection
 try {
   $conn = new PDO("mysql:host=$servername;dbname=blogDB", $username, $password);
-  // set the PDO error mode to exception
+  // Set the PDO error mode to exception
   $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
   $connectionStatus = "Connected successfully";
 } catch(PDOException $e) {
   $connectionStatus = "Connection failed: " . $e->getMessage();
 }
+// Show the connection status in console
 debug_to_console($connectionStatus);

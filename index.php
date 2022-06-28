@@ -1,19 +1,20 @@
 <?php include 'inc/header.php';?>
     <?php        
         $postErr = '';
-
+        // Import previously made posts from DB
         $sqlTables = $conn->prepare("SELECT posts.body, posts.time, users.username FROM posts 
         JOIN users ON posts.user_id = users.id");
         $sqlTables->execute();
         $result = $sqlTables->setFetchMode(PDO::FETCH_ASSOC);
         $posts = $sqlTables->fetchAll();
+        // Show previously made posts with the user that made them and a timestamp
         foreach($posts as $post){
             echo '<div class="card"><div class="card-body">' . $post['body'] . '</div>
             <div class="card-footer">' . $post['username'] . '<h6>'. $post['time'] . '</h6></div></div>';
         }
     
 
-    
+// New post functionality
 if(isset($_POST['submit'])){
     if(isset($_SESSION['username'])){
         $username = $_SESSION['username'];
@@ -37,6 +38,7 @@ if(isset($_POST['submit'])){
     }
 }
 ?>
+<!-- Place for new post creation -->
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="POST">
     <div class="mb-3">
         <label for="body" class="form-label"><h5>Create a new post</h5></label>

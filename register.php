@@ -1,12 +1,11 @@
 <?php include 'inc/header.php';?>
-<?php include 'inc/controller.php';?>
 <?php
-
+//Check for input
 if(isset($_POST['submit'])){
 $username = filter_input(INPUT_POST,'username', FILTER_SANITIZE_SPECIAL_CHARS);
 $password = $_POST['password'];
 $password2 = $_POST['password2'];
-
+//Check for errors
 if($username == ''){
     $error = $error . "Username cannot be blank<br>";
 }
@@ -19,6 +18,7 @@ if($password != $password2){
 if($password != '' && $password2 == ''){
     $error = $error . "Please, confirm your password<br>";
 }
+//Check if user is not yet registered
 $sqlTables = $conn->prepare("SELECT username FROM users");
     $sqlTables->execute();
     $result = $sqlTables->setFetchMode(PDO::FETCH_ASSOC);
@@ -28,7 +28,7 @@ $sqlTables = $conn->prepare("SELECT username FROM users");
             $error = 'Username already used';
         }
     }
-
+// Create a new user in the DB
 $sql = "INSERT INTO users (username, password)
 VALUES ('$username', '$password')";
 if($error == ''){
